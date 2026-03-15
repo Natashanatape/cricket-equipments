@@ -125,10 +125,27 @@ function getBotResponse(userMessage) {
 // Toggle chatbot
 function toggleChatbot() {
     const chatbot = document.getElementById('chatbot');
+    const chatbotToggle = document.querySelector('.chatbot-toggle');
+    
+    if (!chatbot) {
+        console.error('Chatbot container not found');
+        return;
+    }
+    
     chatOpen = !chatOpen;
     
     if (chatOpen) {
         chatbot.classList.add('active');
+        chatbot.style.display = 'flex';
+        
+        // Ensure proper z-index on mobile
+        if (window.innerWidth <= 768) {
+            chatbot.style.zIndex = '9999';
+            if (chatbotToggle) {
+                chatbotToggle.style.zIndex = '10000';
+            }
+        }
+        
         // Send welcome message if first time
         if (conversationHistory.length === 0) {
             setTimeout(() => {
@@ -137,8 +154,17 @@ function toggleChatbot() {
         }
     } else {
         chatbot.classList.remove('active');
+        // Don't hide completely, just make inactive
+        setTimeout(() => {
+            if (!chatOpen) {
+                chatbot.style.display = 'none';
+            }
+        }, 300);
     }
 }
+
+// Make sure toggleChatbot is globally available
+window.toggleChatbot = toggleChatbot;
 
 // Add user message
 function addUserMessage(message) {
@@ -224,4 +250,46 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Store quick replies for later use
     window.quickReplies = quickReplies;
+    
+    // Initialize chatbot button
+    const chatbotToggle = document.querySelector('.chatbot-toggle');
+    const chatbotContainer = document.getElementById('chatbot');
+    
+    if (chatbotToggle && chatbotContainer) {
+        // Ensure chatbot toggle is clickable
+        chatbotToggle.style.pointerEvents = 'all';
+        chatbotToggle.style.cursor = 'pointer';
+        
+        // Add click event listener
+        chatbotToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Chatbot toggle clicked'); // Debug log
+            toggleChatbot();
+        });
+        
+        // Add touch event for mobile
+        chatbotToggle.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Chatbot toggle touched'); // Debug log
+            toggleChatbot();
+        });
+        
+        // Ensure chatbot container is properly positioned
+        chatbotContainer.style.position = 'fixed';
+        chatbotContainer.style.display = 'none';
+        
+        console.log('Chatbot initialized successfully'); // Debug log
+    } else {
+        console.error('Chatbot elements not found:', {
+            toggle: !!chatbotToggle,
+            container: !!chatbotContainer
+        });
+    }
+    
+    // Make functions globally available
+    window.sendChatMessage = sendChatMessage;
+    window.handleChatKeypress = handleChatKeypress;
+    window.sendQuickReply = sendQuickReply;
 });
