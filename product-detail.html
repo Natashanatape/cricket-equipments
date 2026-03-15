@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - CricketPro</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">Cricket<span>Pro</span></div>
+        <button class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav class="nav-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <button class="cart-btn" id="cartBtn">
+            Cart (<span id="cartCount">0</span>)
+        </button>
+    </header>
+
+    <!-- Product Detail Section -->
+    <section class="product-detail-section">
+        <div class="product-detail-container">
+            <!-- Product Image -->
+            <div class="product-detail-image">
+                <div class="zoom-hint">Hover to zoom | Click for fullscreen</div>
+                <img id="productImage" src="" alt="Product" class="detail-img">
+            </div>
+
+            <!-- Product Info -->
+            <div class="product-detail-info">
+                <div class="breadcrumb">
+                    <a href="products.html">Products</a> / <span id="productCategory">-</span>
+                </div>
+                
+                <h1 id="productName">-</h1>
+                
+                <div class="product-rating">
+                    <span class="stars">★★★★★</span>
+                    <span class="rating-count">(245 reviews)</span>
+                </div>
+
+                <div class="product-price-section">
+                    <p class="product-price" id="productPrice">₹0</p>
+                </div>
+
+                <p class="product-description" id="productDesc">-</p>
+
+                <!-- Product Specs -->
+                <div class="product-specs">
+                    <h3>Specifications</h3>
+                    <div class="specs-grid">
+                        <div class="spec-item">
+                            <span class="spec-label">Category:</span>
+                            <span class="spec-value" id="specCategory">-</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Material:</span>
+                            <span class="spec-value" id="specMaterial">Premium Quality</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Brand:</span>
+                            <span class="spec-value" id="specBrand">CricketPro</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Warranty:</span>
+                            <span class="spec-value">1 Year</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quantity Selector -->
+                <div class="quantity-selector">
+                    <label>Quantity:</label>
+                    <div class="qty-controls">
+                        <button onclick="decreaseQty()">-</button>
+                        <input type="number" id="quantity" value="1" min="1" max="10">
+                        <button onclick="increaseQty()">+</button>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="product-actions">
+                    <button class="btn-add-cart" onclick="addProductToCart()">Add to Cart</button>
+                    <button class="btn-wishlist" data-wishlist-id="0" onclick="addToWishlist(currentProduct.id)">Add to Wishlist</button>
+                    <button class="btn-share" onclick="openShareModal(currentProduct)">Share</button>
+                </div>
+
+                <!-- Delivery Info -->
+                <div class="delivery-info">
+                    <div class="info-item">
+                        <span class="info-icon"></span>
+                        <div>
+                            <p class="info-title">Free Delivery</p>
+                            <p class="info-text">On orders above ₹500</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-icon"></span>
+                        <div>
+                            <p class="info-title">Authentic Product</p>
+                            <p class="info-text">100% Genuine</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-icon"></span>
+                        <div>
+                            <p class="info-title">Easy Returns</p>
+                            <p class="info-text">7 days return policy</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Products -->
+    <section class="related-products-section">
+        <h2>Related Products</h2>
+        <div class="related-products-grid" id="relatedProducts">
+            <!-- Related products will be loaded here -->
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="reviews-section">
+        <h2>Customer Reviews</h2>
+        <div id="reviewsContainer">
+            <!-- Reviews will be loaded here -->
+        </div>
+    </section>
+
+    <!-- Ads Section -->
+    <section class="ads-section">
+        <div class="ads-container">
+            <div class="ad-card">
+                <span class="ad-icon"></span>
+                <h3>Premium Quality</h3>
+                <p>Trusted by professional cricketers</p>
+            </div>
+            <div class="ad-card">
+                <span class="ad-icon"></span>
+                <h3>Fast Shipping</h3>
+                <p>Delivery within 2-3 business days</p>
+            </div>
+            <div class="ad-card">
+                <span class="ad-icon"></span>
+                <h3>Best Prices</h3>
+                <p>Competitive pricing guaranteed</p>
+            </div>
+            <div class="ad-card">
+                <span class="ad-icon"></span>
+                <h3>Secure Payment</h3>
+                <p>100% safe transactions</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>Cricket<span>Pro</span></h3>
+                <p>Your trusted partner for premium cricket equipment.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="products.html">Products</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <p>Email: info@cricketpro.com</p>
+                <p>Phone: +91 98765 43210</p>
+            </div>
+        </div>
+        <p class="footer-bottom">© 2025 CricketPro Sports. All rights reserved.</p>
+    </footer>
+
+    <div id="toast">Item added to cart!</div>
+    <button id="backToTop">↑</button>
+
+    <!-- Sticky Add to Cart Bar -->
+    <div class="sticky-cart-bar" id="stickyCartBar">
+        <div class="sticky-cart-content">
+            <div class="sticky-product-info">
+                <img id="stickyProductImage" src="" alt="Product">
+                <div class="sticky-product-details">
+                    <h4 id="stickyProductName">-</h4>
+                    <p id="stickyProductPrice">₹0</p>
+                </div>
+            </div>
+            <div class="sticky-cart-actions">
+                <div class="sticky-qty-controls">
+                    <button onclick="decreaseQty()">−</button>
+                    <span id="stickyQuantity">1</span>
+                    <button onclick="increaseQty()">+</button>
+                </div>
+                <button class="btn-sticky-add-cart" onclick="addProductToCart()">
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Review Modal -->
+    <div class="review-modal" id="reviewModal">
+        <div class="review-modal-content">
+            <div class="review-modal-header">
+                <h2>Write a Review</h2>
+                <button class="modal-close" onclick="closeReviewModal()">&times;</button>
+            </div>
+            <form class="review-form" id="reviewForm">
+                <div class="form-group">
+                    <label>Your Name *</label>
+                    <input type="text" name="userName" required placeholder="Enter your name">
+                </div>
+                
+                <div class="form-group">
+                    <label>Rating *</label>
+                    <div class="rating-input">
+                        <span class="rating-star" onclick="setRating(1)">☆</span>
+                        <span class="rating-star" onclick="setRating(2)">☆</span>
+                        <span class="rating-star" onclick="setRating(3)">☆</span>
+                        <span class="rating-star" onclick="setRating(4)">☆</span>
+                        <span class="rating-star" onclick="setRating(5)">☆</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Review Title *</label>
+                    <input type="text" name="reviewTitle" required placeholder="Summarize your experience">
+                </div>
+                
+                <div class="form-group">
+                    <label>Your Review *</label>
+                    <textarea name="reviewComment" required placeholder="Share your thoughts about this product..." rows="5"></textarea>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closeReviewModal()">Cancel</button>
+                    <button type="button" class="btn-save" onclick="submitReview(currentProduct.id)">Submit Review</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Share Modal -->
+    <div class="share-modal" id="shareModal">
+        <div class="share-modal-content" id="shareContent">
+            <!-- Share content will be loaded here -->
+        </div>
+    </div>
+
+    <script src="styles/js/products.js"></script>
+    <script src="styles/js/cart.js"></script>
+    <script src="styles/js/wishlist.js"></script>
+    <script src="styles/js/recently-viewed.js"></script>
+    <script src="styles/js/image-gallery.js"></script>
+    <script src="styles/js/image-zoom.js"></script>
+    <script src="styles/js/reviews.js"></script>
+    <script src="styles/js/social-share.js"></script>
+    <script src="styles/js/breadcrumb.js"></script>
+    <script>
+        let currentProduct = null;
+        let quantity = 1;
+
+        // Load product details
+        function loadProductDetail() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+
+            if (!productId) {
+                window.location.href = 'products.html';
+                return;
+            }
+
+            currentProduct = products.find(p => p.id == productId);
+            if (!currentProduct) {
+                window.location.href = 'products.html';
+                return;
+            }
+
+            // Update page title
+            document.title = currentProduct.name + ' - CricketPro';
+
+            // Load product info
+            document.getElementById('productName').textContent = currentProduct.name;
+            document.getElementById('productCategory').textContent = currentProduct.category.charAt(0).toUpperCase() + currentProduct.category.slice(1);
+            document.getElementById('productPrice').textContent = '₹' + currentProduct.price.toLocaleString();
+            document.getElementById('productDesc').textContent = currentProduct.desc;
+            document.getElementById('specCategory').textContent = currentProduct.category.charAt(0).toUpperCase() + currentProduct.category.slice(1);
+
+            // Initialize image gallery
+            if (window.imageGallery) {
+                window.imageGallery.init(currentProduct);
+            }
+
+            // Load related products
+            loadRelatedProducts();
+            
+            // Update wishlist button state
+            const wishlistBtn = document.querySelector('.btn-wishlist');
+            if (wishlistBtn) {
+                wishlistBtn.setAttribute('data-wishlist-id', currentProduct.id);
+                updateWishlistButton(currentProduct.id);
+            }
+            
+            // Add to recently viewed
+            addToRecentlyViewed(currentProduct.id);
+            
+            // Display reviews
+            displayProductReviews(currentProduct.id);
+            
+            // Update sticky bar
+            updateStickyBar();
+            
+            // Generate breadcrumb
+            if (window.breadcrumbManager) {
+                window.breadcrumbManager.product(currentProduct);
+            }
+        }
+
+        // Load related products
+        function loadRelatedProducts() {
+            const related = products.filter(p => p.category === currentProduct.category && p.id !== currentProduct.id).slice(0, 4);
+            const relatedGrid = document.getElementById('relatedProducts');
+            
+            relatedGrid.innerHTML = related.map(product => `
+                <div class="related-product-card">
+                    <img src="${product.image}" alt="${product.name}">
+                    <h4>${product.name}</h4>
+                    <p class="related-price">₹${product.price.toLocaleString()}</p>
+                    <a href="product-detail.html?id=${product.id}" class="btn-view">View Details</a>
+                </div>
+            `).join('');
+        }
+
+        // Quantity controls
+        function increaseQty() {
+            const qtyInput = document.getElementById('quantity');
+            if (parseInt(qtyInput.value) < 10) {
+                qtyInput.value = parseInt(qtyInput.value) + 1;
+                updateStickyQuantity();
+            }
+        }
+
+        function decreaseQty() {
+            const qtyInput = document.getElementById('quantity');
+            if (parseInt(qtyInput.value) > 1) {
+                qtyInput.value = parseInt(qtyInput.value) - 1;
+                updateStickyQuantity();
+            }
+        }
+
+        // Update sticky bar quantity
+        function updateStickyQuantity() {
+            const qty = document.getElementById('quantity').value;
+            const stickyQty = document.getElementById('stickyQuantity');
+            if (stickyQty) stickyQty.textContent = qty;
+        }
+
+        // Sticky cart bar scroll handler
+        window.addEventListener('scroll', function() {
+            const stickyBar = document.getElementById('stickyCartBar');
+            const productActions = document.querySelector('.product-actions');
+            
+            if (!stickyBar || !productActions) return;
+            
+            const actionsRect = productActions.getBoundingClientRect();
+            
+            if (actionsRect.bottom < 0) {
+                stickyBar.classList.add('show');
+            } else {
+                stickyBar.classList.remove('show');
+            }
+        });
+
+        // Update sticky bar with product info
+        function updateStickyBar() {
+            if (!currentProduct) return;
+            
+            document.getElementById('stickyProductImage').src = currentProduct.image;
+            document.getElementById('stickyProductName').textContent = currentProduct.name;
+            document.getElementById('stickyProductPrice').textContent = '₹' + currentProduct.price.toLocaleString();
+            updateStickyQuantity();
+        }
+
+        // Add to cart
+        function addProductToCart() {
+            const qty = parseInt(document.getElementById('quantity').value);
+            
+            for (let i = 0; i < qty; i++) {
+                addToCart(currentProduct.id);
+            }
+        }
+
+        // Load on page load
+        window.addEventListener('DOMContentLoaded', loadProductDetail);
+    </script>
+    <script src="styles/js/script.js"></script>
+</body>
+</html>

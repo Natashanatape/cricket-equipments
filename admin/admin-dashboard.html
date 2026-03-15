@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - CricketPro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-body">
+    <!-- Admin Sidebar -->
+    <aside class="admin-sidebar">
+        <div class="admin-sidebar-header">
+            <h2>Cricket<span>Pro</span></h2>
+            <p>Admin Panel</p>
+        </div>
+        <nav class="admin-nav">
+            <a href="admin-dashboard.html" class="admin-nav-link active">
+                <span>📊</span> Dashboard
+            </a>
+            <a href="admin-products.html" class="admin-nav-link">
+                <span>📦</span> Products
+            </a>
+            <a href="admin-orders.html" class="admin-nav-link">
+                <span>🛒</span> Orders
+            </a>
+            <a href="#" class="admin-nav-link" id="adminLogout">
+                <span>🚪</span> Logout
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Admin Main Content -->
+    <main class="admin-main">
+        <header class="admin-header">
+            <h1>Dashboard</h1>
+            <div class="admin-user">
+                <span>Welcome, <strong id="adminUserName">Admin</strong></span>
+            </div>
+        </header>
+
+        <!-- Stats Cards -->
+        <section class="admin-stats">
+            <div class="stat-card">
+                <div class="stat-icon">📦</div>
+                <div class="stat-info">
+                    <h3 id="totalProducts">0</h3>
+                    <p>Total Products</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🛒</div>
+                <div class="stat-info">
+                    <h3 id="totalOrders">0</h3>
+                    <p>Total Orders</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-info">
+                    <h3 id="totalRevenue">₹0</h3>
+                    <p>Total Revenue</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⏳</div>
+                <div class="stat-info">
+                    <h3 id="pendingOrders">0</h3>
+                    <p>Pending Orders</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Orders -->
+        <section class="admin-section">
+            <div class="section-header-admin">
+                <h2>Recent Orders</h2>
+                <a href="admin-orders.html" class="btn-view-all">View All</a>
+            </div>
+            <div class="admin-table-wrapper">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Items</th>
+                            <th>Total</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recentOrdersTable">
+                        <tr>
+                            <td colspan="6" class="no-data">No orders yet</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Quick Actions -->
+        <section class="admin-section">
+            <h2>Quick Actions</h2>
+            <div class="quick-actions">
+                <a href="admin-products.html" class="action-card">
+                    <span>📦</span>
+                    <h3>Manage Products</h3>
+                    <p>Add, edit or delete products</p>
+                </a>
+                <a href="admin-orders.html" class="action-card">
+                    <span>🛒</span>
+                    <h3>Manage Orders</h3>
+                    <p>View and update order status</p>
+                </a>
+                <a href="index.html" class="action-card">
+                    <span>🌐</span>
+                    <h3>View Website</h3>
+                    <p>Go to customer site</p>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <script src="products.js"></script>
+    <script>
+        // Check authentication
+        if (localStorage.getItem('adminLoggedIn') !== 'true') {
+            window.location.href = 'admin-login.html';
+        }
+
+        // Display admin username
+        const adminUsername = localStorage.getItem('adminUsername') || 'Admin';
+        document.getElementById('adminUserName').textContent = adminUsername;
+
+        // Load stats
+        function loadStats() {
+            // Total products
+            document.getElementById('totalProducts').textContent = products.length;
+
+            // Get all orders from localStorage
+            const allOrders = JSON.parse(localStorage.getItem('allOrders')) || [];
+            document.getElementById('totalOrders').textContent = allOrders.length;
+
+            // Calculate total revenue
+            const totalRevenue = allOrders.reduce((sum, order) => sum + order.total, 0);
+            document.getElementById('totalRevenue').textContent = '₹' + totalRevenue.toLocaleString();
+
+            // Pending orders
+            const pendingOrders = allOrders.filter(order => order.status === 'Pending').length;
+            document.getElementById('pendingOrders').textContent = pendingOrders;
+        }
+
+        // Load recent orders
+        function loadRecentOrders() {
+            const allOrders = JSON.parse(localStorage.getItem('allOrders')) || [];
+            const recentOrders = allOrders.slice(-5).reverse();
+            const tbody = document.getElementById('recentOrdersTable');
+
+            if (recentOrders.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="no-data">No orders yet</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = recentOrders.map(order => `
+                <tr>
+                    <td><strong>${order.orderId}</strong></td>
+                    <td>${order.customer.fullName}</td>
+                    <td>${order.items.length} items</td>
+                    <td>₹${order.total.toLocaleString()}</td>
+                    <td>${new Date(order.timestamp).toLocaleDateString()}</td>
+                    <td><span class="status-badge status-${order.status.toLowerCase()}">${order.status}</span></td>
+                </tr>
+            `).join('');
+        }
+
+        // Logout
+        document.getElementById('adminLogout').addEventListener('click', function(e) {
+            e.preventDefault();
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('adminLoggedIn');
+                localStorage.removeItem('adminUsername');
+                window.location.href = 'admin-login.html';
+            }
+        });
+
+        // Initialize
+        loadStats();
+        loadRecentOrders();
+    </script>
+</body>
+</html>

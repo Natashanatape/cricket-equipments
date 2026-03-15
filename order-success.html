@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed - CricketPro</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">Cricket<span>Pro</span></div>
+        <button class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav class="nav-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <button class="cart-btn" id="cartBtn">
+            Cart (<span id="cartCount">0</span>)
+        </button>
+    </header>
+
+    <!-- Success Section -->
+    <section class="order-success-section">
+        <div class="success-container">
+            <div class="success-animation">
+                <div class="checkmark">✓</div>
+            </div>
+            <h1>Order Confirmed!</h1>
+            <p class="success-message">Thank you for your purchase. Your order has been placed successfully.</p>
+
+            <!-- Order Details -->
+            <div class="order-details-card">
+                <div class="detail-row">
+                    <span class="detail-label">Order ID:</span>
+                    <span class="detail-value" id="orderId">-</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Order Date:</span>
+                    <span class="detail-value" id="orderDate">-</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Total Amount:</span>
+                    <span class="detail-value" id="orderTotal">-</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Payment Method:</span>
+                    <span class="detail-value" id="paymentMethod">-</span>
+                </div>
+            </div>
+
+            <!-- Delivery Address -->
+            <div class="delivery-card">
+                <h3>Delivery Address</h3>
+                <p id="deliveryName">-</p>
+                <p id="deliveryAddress">-</p>
+                <p id="deliveryPhone">-</p>
+            </div>
+
+            <!-- Order Items -->
+            <div class="order-items-card">
+                <h3>Order Items</h3>
+                <div class="items-list" id="itemsList">
+                    <!-- Items will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="success-actions">
+                <button class="btn-track" onclick="trackOrderFromSuccess()">Track Order</button>
+                <button class="btn-track" onclick="downloadInvoice()">Download Invoice</button>
+                <a href="products.html" class="btn-continue">Continue Shopping</a>
+            </div>
+
+            <p class="success-footer">A confirmation email has been sent to your registered email address.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>Cricket<span>Pro</span></h3>
+                <p>Your trusted partner for premium cricket equipment.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="products.html">Products</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <p>Email: info@cricketpro.com</p>
+                <p>Phone: +91 98765 43210</p>
+            </div>
+        </div>
+        <p class="footer-bottom">© 2025 CricketPro Sports. All rights reserved.</p>
+    </footer>
+
+    <div id="toast">Order placed successfully!</div>
+    <button id="backToTop">↑</button>
+
+    <script src="styles/js/cart.js"></script>
+    <script>
+        // Load order details
+        function loadOrderDetails() {
+            const order = JSON.parse(localStorage.getItem('lastOrder'));
+            
+            if (!order) {
+                window.location.href = 'products.html';
+                return;
+            }
+
+            document.getElementById('orderId').textContent = order.orderId;
+            document.getElementById('orderDate').textContent = order.date;
+            document.getElementById('orderTotal').textContent = '₹' + order.total.toLocaleString();
+            document.getElementById('paymentMethod').textContent = order.paymentMethod.toUpperCase();
+
+            const customer = order.customer;
+            document.getElementById('deliveryName').textContent = customer.fullName;
+            document.getElementById('deliveryAddress').textContent = `${customer.address}, ${customer.city}, ${customer.state} ${customer.pincode}`;
+            document.getElementById('deliveryPhone').textContent = customer.phone;
+
+            const itemsList = document.getElementById('itemsList');
+            itemsList.innerHTML = order.items.map(item => `
+                <div class="item-row">
+                    <div class="item-info">
+                        <h4>${item.name}</h4>
+                        <p>Qty: ${item.quantity}</p>
+                    </div>
+                    <div class="item-price">
+                        ₹${(item.price * item.quantity).toLocaleString()}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Track order
+        function trackOrderFromSuccess() {
+            const order = JSON.parse(localStorage.getItem('lastOrder'));
+            if (order) {
+                window.location.href = 'track-order.html?orderId=' + order.orderId;
+            }
+        }
+
+        // Download invoice
+        function downloadInvoice() {
+            const order = JSON.parse(localStorage.getItem('lastOrder'));
+            if (!order) return;
+
+            const invoiceContent = `
+CRICKETPRO - ORDER INVOICE
+================================
+Order ID: ${order.orderId}
+Date: ${order.date}
+
+CUSTOMER DETAILS:
+${order.customer.fullName}
+${order.customer.email}
+${order.customer.phone}
+${order.customer.address}
+${order.customer.city}, ${order.customer.state} ${order.customer.pincode}
+
+ORDER ITEMS:
+${order.items.map(item => `${item.name} x${item.quantity} - ₹${(item.price * item.quantity).toLocaleString()}`).join('\n')}
+
+SUBTOTAL: ₹${(order.total - 50).toLocaleString()}
+DELIVERY CHARGES: ₹50
+TOTAL: ₹${order.total.toLocaleString()}
+
+PAYMENT METHOD: ${order.paymentMethod.toUpperCase()}
+
+Thank you for your purchase!
+            `;
+
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(invoiceContent));
+            element.setAttribute('download', `Invoice_${order.orderId}.txt`);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        // Load on page load
+        window.addEventListener('DOMContentLoaded', loadOrderDetails);
+    </script>
+    <script src="styles/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>CricketPro – Cricket Equipments Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles/style.css" />
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+    <!-- Loader (only on home page) -->
+    <div id="loader">
+        <div class="loader-ball">
+            <div class="seam seam-vertical"></div>
+            <div class="seam seam-horizontal"></div>
+        </div>
+        <p class="loader-text">Loading CricketPro...</p>
+    </div>
+
+    <!-- Navbar -->
+    <header class="navbar">
+        <a href="index.html" class="logo" style="text-decoration: none; color: inherit;">Cricket<span>Pro</span></a>
+        <button class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav class="nav-links" id="navLinks">
+            <a href="#home" class="active">Home</a>
+            <a href="products.html">Products</a>
+            <a href="wishlist.html">Wishlist</a>
+            <a href="contact.html">Contact</a>
+            <a href="admin-login.html" style="color: var(--accent);">Admin</a>
+        </nav>
+        <div class="nav-icons">
+            <button class="wishlist-btn" id="wishlistBtn">
+                ❤️ (<span id="wishlistCount">0</span>)
+            </button>
+            <button class="cart-btn" id="cartBtn">
+                🛒 (<span id="cartCount">0</span>)
+            </button>
+        </div>
+    </header>
+
+    <!-- Top Banner -->
+    <section class="top-banner">
+        <a href="products.html" class="banner-btn">Shop Now</a>
+    </section>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-image">
+            <img src="images/banner/player1.jpg" alt="Cricket Player">
+        </div>
+        <div class="hero-content">
+            <h1>Premium Cricket Equipment</h1>
+            <p>Shop authentic cricket gear from top brands - MRF, PUMA, SG, SS & more</p>
+            <a href="products.html" class="btn-primary">Shop Now</a>
+        </div>
+    </section>
+
+    <!-- Shop by Category -->
+    <section class="section category-section">
+        <h2 class="section-title">Shop by Category</h2>
+        <div class="category-grid">
+            <a href="products.html?category=bats" class="category-card">
+                <img src="images/bats/MRF_GENIUS_CHASE_MASTER_ENGLISH_WILLOW_CRICKET_BAT.jpg" alt="Bats">
+                <div class="category-overlay">
+                    <h3>Cricket Bats</h3>
+                    <p>Shop Now →</p>
+                </div>
+            </a>
+            <a href="products.html?category=balls" class="category-card">
+                <img src="images/balls/Kookaburra_Speed_Cricket_Ball.jpg" alt="Balls">
+                <div class="category-overlay">
+                    <h3>Cricket Balls</h3>
+                    <p>Shop Now →</p>
+                </div>
+            </a>
+            <a href="products.html?category=gloves" class="category-card">
+                <img src="images/gloves/SS-Superlite-Cricket-Batting-Gloves.jpg" alt="Gloves">
+                <div class="category-overlay">
+                    <h3>Batting Gloves</h3>
+                    <p>Shop Now →</p>
+                </div>
+            </a>
+            <a href="products.html?category=helmets" class="category-card">
+                <img src="images/helmets/SHREY_KOROYD_STAINLESS_STEEL_HK842_NAVY_1_HD_5fm6bT3u4.jpg" alt="Helmets">
+                <div class="category-overlay">
+                    <h3>Helmets</h3>
+                    <p>Shop Now →</p>
+                </div>
+            </a>
+            <a href="products.html?category=pads" class="category-card">
+                <img src="images/pads/PUMA-Future-4-Cricket-Batting-Pads.jpg" alt="Pads">
+                <div class="category-overlay">
+                    <h3>Batting Pads</h3>
+                    <p>Shop Now →</p>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- New Arrivals -->
+    <section class="section new-arrivals-section">
+        <div class="section-header">
+            <h2 class="section-title">New Arrivals</h2>
+            <p class="section-subtitle">Latest cricket gear just added to our collection</p>
+        </div>
+        <div class="arrivals-grid">
+            <div class="arrival-card">
+                <span class="new-badge">NEW</span>
+                <div class="product-image-wrapper">
+                    <img src="images/bats/SG_SUNNY_TONNY_ENGLISH_WILLOW_CRICKET_BAT.jpg" alt="SG Sunny Tonny" class="product-img">
+                </div>
+                <h3>SG Sunny Tonny</h3>
+                <p class="product-desc">English Willow Cricket Bat</p>
+                <p class="price">₹22,999</p>
+                <button class="btn-cart add-to-cart">Add to Cart</button>
+            </div>
+            <div class="arrival-card">
+                <span class="new-badge">NEW</span>
+                <div class="product-image-wrapper">
+                    <img src="images/balls/SF_Yorker_Cricket_Ball_Red.jpg" alt="SF Yorker" class="product-img">
+                </div>
+                <h3>SF Yorker Red Ball</h3>
+                <p class="product-desc">Premium Leather Cricket Ball</p>
+                <p class="price">₹899</p>
+                <button class="btn-cart add-to-cart">Add to Cart</button>
+            </div>
+            <div class="arrival-card">
+                <span class="new-badge">NEW</span>
+                <div class="product-image-wrapper">
+                    <img src="images/gloves/mrf-grand.jpg" alt="MRF Grand" class="product-img">
+                </div>
+                <h3>MRF Grand Gloves</h3>
+                <p class="product-desc">Professional Batting Gloves</p>
+                <p class="price">₹3,299</p>
+                <button class="btn-cart add-to-cart">Add to Cart</button>
+            </div>
+            <div class="arrival-card">
+                <span class="new-badge">NEW</span>
+                <div class="product-image-wrapper">
+                    <img src="images/helmets/SHREY_MASTER_CLASS_AIR_2.0_TITANIUM__H011_NAVY_1_HD_kCSvFKdBqb.jpg" alt="Shrey Master" class="product-img">
+                </div>
+                <h3>Shrey Master Class Air 2.0</h3>
+                <p class="product-desc">Titanium Cricket Helmet</p>
+                <p class="price">₹6,499</p>
+                <button class="btn-cart add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="section featured-section" id="featured">
+        <h2 class="section-title">Featured Products</h2>
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-image-wrapper">
+                    <img src="images/bats/MRF_GENIUS_CHASE_MASTER_ENGLISH_WILLOW_CRICKET_BAT.jpg" alt="MRF Genius" class="product-img">
+                </div>
+                <h3>MRF Genius Chase Master</h3>
+                <p class="product-desc">English Willow Cricket Bat</p>
+                <p class="price">₹18,999</p>
+                <button class="btn-cart add-to-cart">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <div class="product-image-wrapper">
+                    <img src="images/balls/Kookaburra_Speed_Cricket_Ball.jpg" alt="Kookaburra" class="product-img">
+                </div>
+                <h3>Kookaburra Speed Ball</h3>
+                <p class="product-desc">Premium Leather Cricket Ball</p>
+                <p class="price">₹1,299</p>
+                <button class="btn-cart add-to-cart">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <div class="product-image-wrapper">
+                    <img src="images/gloves/SS-Superlite-Cricket-Batting-Gloves.jpg" alt="SS Superlite" class="product-img">
+                </div>
+                <h3>SS Superlite Gloves</h3>
+                <p class="product-desc">Lightweight Batting Gloves</p>
+                <p class="price">₹2,499</p>
+                <button class="btn-cart add-to-cart">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <div class="product-image-wrapper">
+                    <img src="images/helmets/SHREY_KOROYD_STAINLESS_STEEL_HK842_NAVY_1_HD_5fm6bT3u4.jpg" alt="Shrey Helmet" class="product-img">
+                </div>
+                <h3>Shrey Koroyd Steel</h3>
+                <p class="product-desc">Premium Cricket Helmet</p>
+                <p class="price">₹4,999</p>
+                <button class="btn-cart add-to-cart">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <div class="product-image-wrapper">
+                    <img src="images/bats/PUMA_ONE8_8.1_ENGLISH_WILLOW_CRICKET_BAT.jpg" alt="PUMA One8" class="product-img">
+                </div>
+                <h3>PUMA One8 8.1</h3>
+                <p class="product-desc">English Willow Cricket Bat</p>
+                <p class="price">₹16,999</p>
+                <button class="btn-cart add-to-cart">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <div class="product-image-wrapper">
+                    <img src="images/pads/PUMA-Future-4-Cricket-Batting-Pads.jpg" alt="PUMA Pads" class="product-img">
+                </div>
+                <h3>PUMA Future 4 Pads</h3>
+                <p class="product-desc">Professional Batting Pads</p>
+                <p class="price">₹3,499</p>
+                <button class="btn-cart add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Promo Banner -->
+    <section class="promo-banner">
+        <div class="banner-player">
+            <img src="images/banner/player2.jpg" alt="Cricket Champion">
+        </div>
+        <div class="banner-content">
+            <span class="banner-tag">GEAR UP LIKE A CHAMPION</span>
+            <h2>Play Like the Pros</h2>
+            <p>Premium cricket equipment trusted by professional players across India</p>
+            <a href="products.html" class="btn-banner">Explore Collection →</a>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="section why-section" id="about">
+        <h2 class="section-title">Why Choose CricketPro?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>Authentic Products</h3>
+                <p>100% genuine cricket equipment from authorized dealers</p>
+            </div>
+            <div class="feature-card">
+                <h3>Fast Delivery</h3>
+                <p>Quick shipping across India with secure packaging</p>
+            </div>
+            <div class="feature-card">
+                <h3>Best Prices</h3>
+                <p>Competitive pricing with regular discounts and offers</p>
+            </div>
+            <div class="feature-card">
+                <h3>Expert Support</h3>
+                <p>Cricket enthusiasts ready to help you choose the right gear</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section testimonials-section">
+        <h2 class="section-title">Customer Reviews</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <p>"Best cricket equipment store! Got my MRF bat from here and it's been amazing for my academy matches."</p>
+                <h4>Rahul Sharma</h4>
+                <span>Academy Player</span>
+            </div>
+            <div class="testimonial-card">
+                <p>"Quality products at great prices. The staff knows cricket gear inside out. Highly recommended!"</p>
+                <h4>Priya Desai</h4>
+                <span>College Team Captain</span>
+            </div>
+            <div class="testimonial-card">
+                <p>"Ordered full team kit for our club. Fast delivery and excellent quality. Will order again!"</p>
+                <h4>Vikram Singh</h4>
+                <span>Club Manager</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recently Viewed -->
+    <section class="section featured-section" id="recently-viewed" style="display: none;">
+        <h2 class="section-title">Recently Viewed</h2>
+        <div class="product-grid" id="recentlyViewedHome">
+            <!-- Recently viewed products will be loaded here -->
+        </div>
+    </section>
+
+    <!-- Contact Info -->
+    <section class="section contact-section" id="contact">
+        <div class="contact-player">
+            <img src="images/banner/player3.jpg" alt="Cricket Pro">
+        </div>
+        <div class="contact-content">
+            <h2 class="section-title">Visit Our Store</h2>
+            <p>Get your cricket gear from our store or order online for fast delivery across India.</p>
+            <div class="contact-buttons">
+                <a href="products.html" class="btn-primary">Browse Products</a>
+                <a href="contact.html" class="btn-outline">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brand Logos Section -->
+    <section class="section brands-section">
+        <div class="brands-header">
+            <span class="brands-badge">TRUSTED BY PROFESSIONALS</span>
+            <h2 class="section-title">Official Partner of Top Brands</h2>
+            <p class="brands-subtitle">Authorized dealers of premium cricket equipment brands trusted by champions</p>
+        </div>
+        <div class="brands-grid">
+            <div class="brand-card">
+                <div class="brand-logo-img">
+                    <img src="images/brand_logo/mrf.png" alt="MRF">
+                </div>
+                <span class="brand-badge">Official Partner</span>
+            </div>
+            <div class="brand-card">
+                <div class="brand-logo-img">
+                    <img src="images/brand_logo/puma.png" alt="PUMA">
+                </div>
+                <span class="brand-badge">Authorized Dealer</span>
+            </div>
+            <div class="brand-card">
+                <div class="brand-logo-img">
+                    <img src="images/brand_logo/nike.png" alt="NIKE">
+                </div>
+                <span class="brand-badge">Official Partner</span>
+            </div>
+            <div class="brand-card">
+                <div class="brand-logo-img">
+                    <img src="images/brand_logo/adidas.png" alt="ADIDAS">
+                </div>
+                <span class="brand-badge">Authorized Dealer</span>
+            </div>
+            <div class="brand-card">
+                <div class="brand-logo-img">
+                    <img src="images/brand_logo/skechers.png" alt="SKECHERS">
+                </div>
+                <span class="brand-badge">Official Partner</span>
+            </div>
+            <div class="brand-card">
+                <div class="brand-logo-img">
+                    <img src="images/brand_logo/perfomax.png" alt="PERFOMAX">
+                </div>
+                <span class="brand-badge">Official Partner</span>
+            </div>
+        </div>
+        <div class="brands-stats">
+            <div class="brand-stat">
+                <h3>10,000+</h3>
+                <p>Happy Customers</p>
+            </div>
+            <div class="brand-stat">
+                <h3>6+</h3>
+                <p>Premium Brands</p>
+            </div>
+            <div class="brand-stat">
+                <h3>100%</h3>
+                <p>Authentic Products</p>
+            </div>
+            <div class="brand-stat">
+                <h3>5★</h3>
+                <p>Customer Rating</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Partners Section -->
+    <section class="section brands-section">
+        <div class="brands-header">
+            <span class="brands-badge">SECURE PAYMENTS</span>
+            <h2 class="section-title">Trusted Payment Partners</h2>
+            <p class="brands-subtitle">Multiple secure payment options for your convenience and safety</p>
+        </div>
+        <div class="brands-grid">
+            <a href="https://www.visa.co.in/" target="_blank" rel="noopener noreferrer" class="brand-card">
+                <div class="brand-logo-img">
+                    <img src="images/payment_logo/visa.png" alt="Visa">
+                </div>
+                <span class="brand-badge">Accepted</span>
+            </a>
+            <a href="https://www.mastercard.co.in/" target="_blank" rel="noopener noreferrer" class="brand-card">
+                <div class="brand-logo-img">
+                    <img src="images/payment_logo/mastercard.png" alt="Mastercard">
+                </div>
+                <span class="brand-badge">Accepted</span>
+            </a>
+            <a href="https://www.npci.org.in/what-we-do/upi/product-overview" target="_blank" rel="noopener noreferrer" class="brand-card">
+                <div class="brand-logo-img">
+                    <img src="images/payment_logo/upi.png" alt="UPI">
+                </div>
+                <span class="brand-badge">Accepted</span>
+            </a>
+            <a href="https://pay.google.com/" target="_blank" rel="noopener noreferrer" class="brand-card">
+                <div class="brand-logo-img">
+                    <img src="images/payment_logo/gpay.png" alt="Google Pay">
+                </div>
+                <span class="brand-badge">Accepted</span>
+            </a>
+            <a href="https://www.phonepe.com/" target="_blank" rel="noopener noreferrer" class="brand-card">
+                <div class="brand-logo-img">
+                    <img src="images/payment_logo/phonepe.png" alt="PhonePe">
+                </div>
+                <span class="brand-badge">Accepted</span>
+            </a>
+            <a href="https://paytm.com/" target="_blank" rel="noopener noreferrer" class="brand-card">
+                <div class="brand-logo-img">
+                    <img src="images/payment_logo/paytm.png" alt="Paytm">
+                </div>
+                <span class="brand-badge">Accepted</span>
+            </a>
+        </div>
+        <div class="brands-stats">
+            <div class="brand-stat">
+                <h3>100%</h3>
+                <p>Secure Payments</p>
+            </div>
+            <div class="brand-stat">
+                <h3>6+</h3>
+                <p>Payment Options</p>
+            </div>
+            <div class="brand-stat">
+                <h3>SSL</h3>
+                <p>Encrypted</p>
+            </div>
+            <div class="brand-stat">
+                <h3>24/7</h3>
+                <p>Support Available</p>
+            </div>
+        </div>
+    </section>
+
+
+    <footer class="footer">
+        <!-- FAQ Section in Footer -->
+        <div class="footer-faq-section">
+            <h2 class="faq-title">Frequently Asked Questions</h2>
+            <div class="footer-faq-grid">
+                <div class="footer-faq-item">
+                    <div class="footer-faq-question" onclick="toggleFooterFAQ(this)">
+                        <h3>Are all products 100% authentic?</h3>
+                        <span class="footer-faq-icon">+</span>
+                    </div>
+                    <div class="footer-faq-answer">
+                        <p>Yes, all our cricket equipment is 100% authentic and sourced directly from authorized dealers. We guarantee genuine products from brands like MRF, PUMA, SG, SS, and more.</p>
+                    </div>
+                </div>
+
+                <div class="footer-faq-item">
+                    <div class="footer-faq-question" onclick="toggleFooterFAQ(this)">
+                        <h3>What are the delivery charges?</h3>
+                        <span class="footer-faq-icon">+</span>
+                    </div>
+                    <div class="footer-faq-answer">
+                        <p>We charge a flat delivery fee of ₹50 for all orders across India. Orders are typically delivered within 5-7 business days.</p>
+                    </div>
+                </div>
+
+                <div class="footer-faq-item">
+                    <div class="footer-faq-question" onclick="toggleFooterFAQ(this)">
+                        <h3>How can I track my order?</h3>
+                        <span class="footer-faq-icon">+</span>
+                    </div>
+                    <div class="footer-faq-answer">
+                        <p>After placing your order, you'll receive an Order ID via email. Visit our Track Order page and enter your Order ID and email address to see real-time tracking updates.</p>
+                    </div>
+                </div>
+
+                <div class="footer-faq-item">
+                    <div class="footer-faq-question" onclick="toggleFooterFAQ(this)">
+                        <h3>What payment methods do you accept?</h3>
+                        <span class="footer-faq-icon">+</span>
+                    </div>
+                    <div class="footer-faq-answer">
+                        <p>We accept UPI (GPay, PhonePe, Paytm), Credit/Debit Cards, Net Banking, and Cash on Delivery (COD). All online payments are 100% secure.</p>
+                    </div>
+                </div>
+
+                <div class="footer-faq-item">
+                    <div class="footer-faq-question" onclick="toggleFooterFAQ(this)">
+                        <h3>What is your return policy?</h3>
+                        <span class="footer-faq-icon">+</span>
+                    </div>
+                    <div class="footer-faq-answer">
+                        <p>We offer a 7-day return policy from the date of delivery. Products must be unused, in original packaging with all tags intact.</p>
+                    </div>
+                </div>
+
+                <div class="footer-faq-item">
+                    <div class="footer-faq-question" onclick="toggleFooterFAQ(this)">
+                        <h3>Do you offer discount coupons?</h3>
+                        <span class="footer-faq-icon">+</span>
+                    </div>
+                    <div class="footer-faq-answer">
+                        <p>Yes! We regularly offer discount coupons. Check the checkout page for available coupons. Current offers include FIRSTBUY (10% off), WELCOME15 (15% off), and more.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>Cricket<span>Pro</span></h3>
+                <p>Your trusted partner for premium cricket equipment.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="products.html">Products</a>
+                <a href="contact.html">Contact</a>
+                <a href="#about">About Us</a>
+                <a href="track-order.html">Track Order</a>
+            </div>
+            <div class="footer-col">
+                <h4>Customer Service</h4>
+                <p>Email: info@cricketpro.com</p>
+                <p>Phone: +91 98765 43210</p>
+            </div>
+            <div class="footer-col">
+                <h4>Newsletter</h4>
+                <p>Get updates on new arrivals</p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" placeholder="Your email" required>
+                    <button type="submit" class="btn-primary">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <p class="footer-bottom">© 2025 CricketPro Sports. All rights reserved.</p>
+    </footer>
+
+
+
+    <!-- Toast notification -->
+    <div id="toast">Item added to cart!</div>
+    <button id="backToTop">↑</button>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/919876543210?text=Hi%20CricketPro!%20I'm%20interested%20in%20your%20cricket%20equipment." 
+       class="whatsapp-float" 
+       target="_blank" 
+       rel="noopener noreferrer"
+       title="Chat with us on WhatsApp">
+        <svg viewBox="0 0 32 32" class="whatsapp-icon">
+            <path fill="currentColor" d="M16 0C7.164 0 0 7.164 0 16c0 2.825.736 5.48 2.024 7.784L0 32l8.448-2.016A15.923 15.923 0 0016 32c8.836 0 16-7.164 16-16S24.836 0 16 0zm0 29.333c-2.547 0-4.96-.707-7.013-1.947l-.507-.293-5.227 1.253 1.28-5.12-.32-.533A13.28 13.28 0 012.667 16c0-7.36 5.973-13.333 13.333-13.333S29.333 8.64 29.333 16 23.36 29.333 16 29.333zm7.307-9.973c-.4-.2-2.373-1.173-2.747-1.307-.373-.133-.64-.2-.907.2-.267.4-1.04 1.307-1.28 1.573-.24.267-.48.307-.88.107-.4-.2-1.68-.627-3.2-2-.187-.173-1.173-1.013-1.373-1.387-.2-.373-.027-.573.173-.76.173-.173.4-.453.6-.68.2-.227.267-.387.4-.653.133-.267.067-.493-.033-.693-.1-.2-.907-2.187-1.24-2.987-.32-.773-.653-.667-.907-.68-.227-.013-.493-.013-.76-.013s-.693.093-1.053.467c-.36.373-1.387 1.36-1.387 3.32s1.413 3.853 1.613 4.12c.2.267 2.8 4.28 6.787 6 .947.413 1.68.653 2.253.84.947.293 1.813.253 2.493.16.76-.107 2.373-.973 2.707-1.907.333-.933.333-1.733.227-1.907-.107-.173-.373-.267-.773-.467z"/>
+        </svg>
+        <span class="whatsapp-text">Chat with us</span>
+    </a>
+
+    <!-- Newsletter Popup -->
+    <div class="newsletter-popup" id="newsletterPopup">
+        <div class="newsletter-popup-content">
+            <button class="newsletter-close" onclick="closeNewsletterPopup()">&times;</button>
+            <div class="newsletter-popup-left">
+                <div class="newsletter-icon">🎁</div>
+                <h2>Get 10% OFF</h2>
+                <p class="newsletter-offer">On Your First Order!</p>
+                <p class="newsletter-desc">Subscribe to our newsletter and get exclusive deals on premium cricket equipment.</p>
+            </div>
+            <div class="newsletter-popup-right">
+                <form class="newsletter-popup-form" id="newsletterPopupForm">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <input type="tel" placeholder="Phone Number (Optional)">
+                    <button type="submit" class="btn-subscribe">Get My 10% OFF</button>
+                    <p class="newsletter-privacy">We respect your privacy. Unsubscribe anytime.</p>
+                </form>
+                <div class="newsletter-features">
+                    <div class="newsletter-feature">
+                        <span>✓</span> Exclusive Deals & Offers
+                    </div>
+                    <div class="newsletter-feature">
+                        <span>✓</span> New Arrivals First
+                    </div>
+                    <div class="newsletter-feature">
+                        <span>✓</span> Expert Cricket Tips
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot -->
+    <button class="chatbot-toggle" onclick="toggleChatbot()">💬</button>
+    <div class="chatbot-container" id="chatbot">
+        <div class="chatbot-header">
+            <div class="chatbot-header-content">
+                <div class="chatbot-avatar">🏏</div>
+                <div class="chatbot-info">
+                    <h3>CricketPro Assistant</h3>
+                    <p>Online • Ready to help</p>
+                </div>
+            </div>
+            <button class="chatbot-close" onclick="toggleChatbot()">✕</button>
+        </div>
+        <div class="chatbot-messages" id="chatMessages">
+            <!-- Messages will appear here -->
+        </div>
+        <div class="chatbot-quick-replies">
+            <button class="quick-reply-btn" onclick="sendQuickReply('Show me cricket bats')">🏏 Cricket Bats</button>
+            <button class="quick-reply-btn" onclick="sendQuickReply('What are your delivery charges?')">📦 Delivery</button>
+            <button class="quick-reply-btn" onclick="sendQuickReply('Do you have any discounts?')">🎉 Discounts</button>
+        </div>
+        <div class="chatbot-input-area">
+            <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="handleChatKeypress(event)">
+            <button class="chatbot-send-btn" onclick="sendChatMessage()">➤</button>
+        </div>
+    </div>
+
+    <script src="styles/js/script.js"></script>
+    <script src="styles/js/cart.js"></script>
+    <script src="styles/js/wishlist.js"></script>
+    <script src="styles/js/recently-viewed.js"></script>
+    <script src="styles/js/user-auth.js"></script>
+    <script src="styles/js/chatbot.js"></script>
+    <script src="styles/js/emailjs-config.js"></script>
+    <script>
+        // Toggle Footer FAQ items
+        function toggleFooterFAQ(element) {
+            const faqItem = element.parentElement;
+            const isActive = faqItem.classList.contains('active');
+            const icon = element.querySelector('.footer-faq-icon');
+            
+            // Toggle current item
+            if (isActive) {
+                faqItem.classList.remove('active');
+                icon.textContent = '+';
+            } else {
+                faqItem.classList.add('active');
+                icon.textContent = '−';
+            }
+        }
+
+        // Newsletter Popup Logic
+        function showNewsletterPopup() {
+            const popup = document.getElementById('newsletterPopup');
+            const hasSeenPopup = localStorage.getItem('newsletterPopupSeen');
+            
+            if (!hasSeenPopup) {
+                setTimeout(() => {
+                    popup.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                }, 5000); // Show after 5 seconds
+            }
+        }
+
+        function closeNewsletterPopup() {
+            const popup = document.getElementById('newsletterPopup');
+            popup.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            localStorage.setItem('newsletterPopupSeen', 'true');
+        }
+
+        // Newsletter Form Submit
+        document.getElementById('newsletterPopupForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const name = this.querySelector('input[type="text"]').value;
+            const email = this.querySelector('input[type="email"]').value;
+            
+            // Show loading state
+            const submitBtn = this.querySelector('.btn-subscribe');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Subscribing...';
+            submitBtn.disabled = true;
+            
+            try {
+                let result;
+                
+                // Check if demo mode or real EmailJS
+                if (isDemoMode()) {
+                    result = await simulateEmailSend('Newsletter', { name, email });
+                } else {
+                    result = await sendNewsletterEmail(email, name);
+                }
+                
+                // Save to localStorage for admin panel
+                const subscriptions = JSON.parse(localStorage.getItem('newsletterSubscriptions') || '[]');
+                subscriptions.push({
+                    name,
+                    email,
+                    timestamp: new Date().toISOString(),
+                    id: Date.now()
+                });
+                localStorage.setItem('newsletterSubscriptions', JSON.stringify(subscriptions));
+                
+                // Show success message
+                alert(`Thank you ${name}! ${result.message}`);
+                closeNewsletterPopup();
+                this.reset();
+            } catch (error) {
+                console.error('Newsletter subscription error:', error);
+                alert('Subscription failed. Please try again.');
+            } finally {
+                // Reset button state
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+
+        // Exit Intent Detection
+        document.addEventListener('mouseleave', function(e) {
+            if (e.clientY <= 0) {
+                const popup = document.getElementById('newsletterPopup');
+                const hasSeenPopup = localStorage.getItem('newsletterPopupSeen');
+                
+                if (!hasSeenPopup && popup.style.display !== 'flex') {
+                    popup.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                }
+            }
+        });
+
+        // Show popup on page load
+        window.addEventListener('load', showNewsletterPopup);
+
+        // Close popup on outside click
+        document.getElementById('newsletterPopup').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeNewsletterPopup();
+            }
+        });
+    </script>
+</body>
+</html>

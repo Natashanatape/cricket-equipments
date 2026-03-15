@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - CricketPro</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">Cricket<span>Pro</span></div>
+        <button class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav class="nav-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <button class="cart-btn" id="cartBtn">
+            Cart (<span id="cartCount">0</span>)
+        </button>
+    </header>
+
+    <!-- Payment Header -->
+    <section class="payment-header">
+        <h1>Payment</h1>
+        <p>Choose your payment method</p>
+    </section>
+
+    <!-- Payment Content -->
+    <section class="payment-section">
+        <div class="payment-container">
+            <!-- Payment Methods -->
+            <div class="payment-methods-wrapper">
+                <h2>Select Payment Method</h2>
+                <div class="payment-methods">
+                    <label class="payment-method">
+                        <input type="radio" name="paymentMethod" value="upi" checked>
+                        <div class="method-card">
+                            <span class="method-icon">📱</span>
+                            <h3>UPI</h3>
+                            <p>GPay, PhonePe, Paytm</p>
+                        </div>
+                    </label>
+                    <label class="payment-method">
+                        <input type="radio" name="paymentMethod" value="card">
+                        <div class="method-card">
+                            <span class="method-icon">💳</span>
+                            <h3>Debit/Credit Card</h3>
+                            <p>Visa, Mastercard</p>
+                        </div>
+                    </label>
+                    <label class="payment-method">
+                        <input type="radio" name="paymentMethod" value="netbanking">
+                        <div class="method-card">
+                            <span class="method-icon">🏦</span>
+                            <h3>Net Banking</h3>
+                            <p>All major banks</p>
+                        </div>
+                    </label>
+                    <label class="payment-method">
+                        <input type="radio" name="paymentMethod" value="cod">
+                        <div class="method-card">
+                            <span class="method-icon">💵</span>
+                            <h3>Cash on Delivery</h3>
+                            <p>Pay at delivery</p>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Payment Form -->
+                <form class="payment-form" id="paymentForm">
+                    <!-- UPI Section -->
+                    <div class="payment-form-section" id="upiSection">
+                        <label>UPI ID *</label>
+                        <input type="text" name="upiId" placeholder="yourname@upi" required>
+                    </div>
+
+                    <!-- Card Section -->
+                    <div class="payment-form-section" id="cardSection" style="display: none;">
+                        <label>Card Number *</label>
+                        <input type="text" name="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Expiry Date *</label>
+                                <input type="text" name="expiry" placeholder="MM/YY" maxlength="5">
+                            </div>
+                            <div class="form-group">
+                                <label>CVV *</label>
+                                <input type="text" name="cvv" placeholder="123" maxlength="3">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Net Banking Section -->
+                    <div class="payment-form-section" id="netbankingSection" style="display: none;">
+                        <label>Select Bank *</label>
+                        <select name="bank">
+                            <option value="">Choose your bank</option>
+                            <option value="sbi">State Bank of India</option>
+                            <option value="hdfc">HDFC Bank</option>
+                            <option value="icici">ICICI Bank</option>
+                            <option value="axis">Axis Bank</option>
+                            <option value="kotak">Kotak Mahindra Bank</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="payment-summary-wrapper">
+                <h2>Order Summary</h2>
+                <div class="payment-items" id="paymentItems">
+                    <!-- Items will be loaded here -->
+                </div>
+                <div class="payment-totals">
+                    <div class="total-row">
+                        <span>Subtotal:</span>
+                        <span id="paymentSubtotal">₹0</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Delivery:</span>
+                        <span>₹50</span>
+                    </div>
+                    <div class="total-row total-final">
+                        <span>Total:</span>
+                        <span id="paymentTotal">₹0</span>
+                    </div>
+                </div>
+
+                <div class="customer-info">
+                    <h3>Delivery To</h3>
+                    <p id="customerName">-</p>
+                    <p id="customerAddress">-</p>
+                </div>
+
+                <button class="btn-pay" onclick="processPayment()">Pay Now</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>Cricket<span>Pro</span></h3>
+                <p>Your trusted partner for premium cricket equipment.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="products.html">Products</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <p>Email: info@cricketpro.com</p>
+                <p>Phone: +91 98765 43210</p>
+            </div>
+        </div>
+        <p class="footer-bottom">© 2025 CricketPro Sports. All rights reserved.</p>
+    </footer>
+
+    <div id="toast">Payment processing...</div>
+    <button id="backToTop">↑</button>
+
+    <script src="styles/js/cart.js"></script>
+    <script src="styles/js/coupon.js"></script>
+    <script>
+        // Load payment details
+        function loadPaymentDetails() {
+            const paymentItems = document.getElementById('paymentItems');
+            const subtotalEl = document.getElementById('paymentSubtotal');
+            const totalEl = document.getElementById('paymentTotal');
+            const customerName = document.getElementById('customerName');
+            const customerAddress = document.getElementById('customerAddress');
+
+            if (cart.length === 0) {
+                window.location.href = 'products.html';
+                return;
+            }
+
+            // Restore applied coupon from localStorage
+            const savedCoupon = localStorage.getItem('appliedCoupon');
+            if (savedCoupon) {
+                appliedCoupon = JSON.parse(savedCoupon);
+            }
+
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const totals = calculateTotalWithCoupon(subtotal, 50);
+
+            let itemsHTML = cart.map(item => `
+                <div class="payment-item">
+                    <span>${item.name} x${item.quantity}</span>
+                    <span>₹${(item.price * item.quantity).toLocaleString()}</span>
+                </div>
+            `).join('');
+
+            paymentItems.innerHTML = itemsHTML;
+
+            subtotalEl.textContent = '₹' + totals.subtotal.toLocaleString();
+            totalEl.textContent = '₹' + totals.total.toLocaleString();
+
+            const customer = JSON.parse(localStorage.getItem('customerDetails')) || {};
+            customerName.textContent = customer.fullName || '-';
+            customerAddress.textContent = `${customer.address}, ${customer.city}, ${customer.state} ${customer.pincode}` || '-';
+        }
+
+        // Handle payment method change
+        document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                document.querySelectorAll('.payment-form-section').forEach(el => el.style.display = 'none');
+                
+                if (e.target.value === 'upi') {
+                    document.getElementById('upiSection').style.display = 'block';
+                } else if (e.target.value === 'card') {
+                    document.getElementById('cardSection').style.display = 'block';
+                } else if (e.target.value === 'netbanking') {
+                    document.getElementById('netbankingSection').style.display = 'block';
+                }
+            });
+        });
+
+        // Process payment
+        function processPayment() {
+            const method = document.querySelector('input[name="paymentMethod"]:checked').value;
+            
+            if (method === 'cod') {
+                completeOrder();
+                return;
+            }
+
+            const form = document.getElementById('paymentForm');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            // Simulate payment processing
+            const toast = document.getElementById('toast');
+            toast.textContent = 'Processing payment...';
+            toast.classList.add('show');
+
+            setTimeout(() => {
+                completeOrder();
+            }, 2000);
+        }
+
+        // Complete order
+        function completeOrder() {
+            const orderId = 'ORD' + Date.now();
+            
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const totals = calculateTotalWithCoupon(subtotal, 50);
+            
+            const orderData = {
+                orderId: orderId,
+                items: cart,
+                customer: JSON.parse(localStorage.getItem('customerDetails')),
+                subtotal: totals.subtotal,
+                discount: totals.discount,
+                delivery: totals.delivery,
+                total: totals.total,
+                coupon: appliedCoupon,
+                date: new Date().toLocaleString(),
+                timestamp: Date.now(),
+                paymentMethod: document.querySelector('input[name="paymentMethod"]:checked').value,
+                status: 'Pending'
+            };
+
+            // Save to lastOrder
+            localStorage.setItem('lastOrder', JSON.stringify(orderData));
+            
+            // Save to allOrders for admin panel
+            const allOrders = JSON.parse(localStorage.getItem('allOrders')) || [];
+            allOrders.push(orderData);
+            localStorage.setItem('allOrders', JSON.stringify(allOrders));
+            
+            // Clear cart and coupon
+            localStorage.removeItem('cricketProCart');
+            localStorage.removeItem('appliedCoupon');
+            cart = [];
+            appliedCoupon = null;
+
+            window.location.href = 'order-success.html?orderId=' + orderId;
+        }
+
+        // Load on page load
+        window.addEventListener('DOMContentLoaded', loadPaymentDetails);
+    </script>
+    <script src="styles/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - CricketPro</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">Cricket<span>Pro</span></div>
+        <button class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav class="nav-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="wishlist.html">Wishlist</a>
+            <a href="contact.html">Contact</a>
+            <a href="faq.html" class="active">FAQ</a>
+        </nav>
+        <div class="nav-icons">
+            <button class="wishlist-btn" id="wishlistBtn">
+                ❤️ (<span id="wishlistCount">0</span>)
+            </button>
+            <button class="cart-btn" id="cartBtn">
+                🛒 (<span id="cartCount">0</span>)
+            </button>
+        </div>
+    </header>
+
+    <!-- FAQ Header -->
+    <section class="faq-header">
+        <h1>Frequently Asked Questions</h1>
+        <p>Find answers to common questions about our products and services</p>
+    </section>
+
+    <!-- FAQ Search -->
+    <section class="faq-search-section">
+        <div class="faq-search-container">
+            <input type="text" id="faqSearch" placeholder="Search for answers...">
+            <button class="btn-search">Search</button>
+        </div>
+    </section>
+
+    <!-- FAQ Categories -->
+    <section class="faq-categories">
+        <button class="faq-category-btn active" data-category="all">All Questions</button>
+        <button class="faq-category-btn" data-category="products">Products</button>
+        <button class="faq-category-btn" data-category="orders">Orders & Shipping</button>
+        <button class="faq-category-btn" data-category="payment">Payment</button>
+        <button class="faq-category-btn" data-category="returns">Returns & Refunds</button>
+        <button class="faq-category-btn" data-category="account">Account</button>
+    </section>
+
+    <!-- FAQ Content -->
+    <section class="faq-section">
+        <div class="faq-container">
+            
+            <!-- Products FAQs -->
+            <div class="faq-category-group" data-category="products">
+                <h2 class="faq-group-title">Products</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Are all products 100% authentic?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, all our cricket equipment is 100% authentic and sourced directly from authorized dealers and manufacturers. We guarantee genuine products from brands like MRF, PUMA, SG, SS, Kookaburra, and more.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How do I choose the right cricket bat?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Choose based on your playing level and budget:</p>
+                        <ul>
+                            <li><strong>English Willow:</strong> Professional players, premium quality (₹15,000+)</li>
+                            <li><strong>Kashmir Willow:</strong> Amateur players, good quality (₹5,000-₹10,000)</li>
+                            <li><strong>Weight:</strong> 1100-1200g for adults, lighter for juniors</li>
+                        </ul>
+                        <p>Check product descriptions for detailed specifications.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What is the warranty on cricket equipment?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Most products come with a 1-year manufacturer warranty against manufacturing defects. Warranty does not cover normal wear and tear or damage from misuse. Please check individual product pages for specific warranty details.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Do you sell cricket balls for match play?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we stock premium leather cricket balls from Kookaburra, SF, and County suitable for match play. We also have practice tennis balls. All leather balls are available in red, white, and pink colors.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Orders & Shipping FAQs -->
+            <div class="faq-category-group" data-category="orders">
+                <h2 class="faq-group-title">Orders & Shipping</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What are the delivery charges?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We charge a flat delivery fee of ₹50 for all orders across India. Orders are typically delivered within 5-7 business days depending on your location.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How can I track my order?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>After placing your order, you'll receive an Order ID via email. Visit our <a href="track-order.html">Track Order</a> page and enter your Order ID and email address to see real-time tracking updates.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Do you deliver to all locations in India?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we deliver to all serviceable pin codes across India. Delivery time may vary for remote locations. Standard delivery takes 5-7 business days.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Can I change my delivery address after placing an order?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Address changes are possible only if the order hasn't been dispatched. Please contact us immediately at info@cricketpro.com or call +91 98765 43210 with your Order ID.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment FAQs -->
+            <div class="faq-category-group" data-category="payment">
+                <h2 class="faq-group-title">Payment</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What payment methods do you accept?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We accept multiple payment methods:</p>
+                        <ul>
+                            <li>UPI (GPay, PhonePe, Paytm)</li>
+                            <li>Credit/Debit Cards (Visa, Mastercard, RuPay)</li>
+                            <li>Net Banking</li>
+                            <li>Cash on Delivery (COD)</li>
+                        </ul>
+                        <p>All online payments are 100% secure and encrypted.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Is Cash on Delivery available?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, Cash on Delivery (COD) is available for all orders. Simply select COD at checkout and pay when your order is delivered.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Are there any hidden charges?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>No, there are no hidden charges. The final amount shown at checkout includes product price and delivery charges (₹50). What you see is what you pay.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Do you offer discount coupons?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! We regularly offer discount coupons. Check the checkout page for available coupons. Current offers include FIRSTBUY (10% off), WELCOME15 (15% off), and more. Minimum order requirements apply.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Returns & Refunds FAQs -->
+            <div class="faq-category-group" data-category="returns">
+                <h2 class="faq-group-title">Returns & Refunds</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What is your return policy?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We offer a 7-day return policy from the date of delivery. Products must be unused, in original packaging with all tags intact. Manufacturing defects are covered under warranty.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How do I return a product?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>To initiate a return:</p>
+                        <ol>
+                            <li>Contact us at info@cricketpro.com with your Order ID</li>
+                            <li>Provide reason for return and product photos</li>
+                            <li>Our team will approve and arrange pickup</li>
+                            <li>Refund will be processed within 7-10 business days</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How long does it take to get a refund?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Refunds are processed within 7-10 business days after we receive the returned product. The amount will be credited to your original payment method.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Can I exchange a product?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, exchanges are possible subject to product availability. Contact us within 7 days of delivery to request an exchange. The product must be unused and in original condition.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Account FAQs -->
+            <div class="faq-category-group" data-category="account">
+                <h2 class="faq-group-title">Account</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Do I need an account to place an order?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>No, you can place orders as a guest. However, creating an account helps you track orders easily, save your wishlist, and get faster checkout for future purchases.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How do I create an account?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Click on the user icon in the navigation bar and select "Sign Up". Fill in your details (name, email, password) and you're done! It's quick and free.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>I forgot my password. What should I do?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Click on "Forgot Password" on the login page. Enter your registered email address and we'll send you instructions to reset your password.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How do I view my order history?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Log in to your account and go to "My Account" section. You'll find your complete order history with order details, status, and tracking information.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Still Have Questions -->
+    <section class="faq-contact-section">
+        <div class="faq-contact-box">
+            <h2>Still Have Questions?</h2>
+            <p>Can't find the answer you're looking for? Our customer support team is here to help!</p>
+            <div class="faq-contact-buttons">
+                <a href="contact.html" class="btn-primary">Contact Us</a>
+                <a href="tel:+919876543210" class="btn-outline">Call: +91 98765 43210</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>Cricket<span>Pro</span></h3>
+                <p>Your trusted partner for premium cricket equipment.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="products.html">Products</a>
+                <a href="faq.html">FAQ</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <p>Email: info@cricketpro.com</p>
+                <p>Phone: +91 98765 43210</p>
+            </div>
+        </div>
+        <p class="footer-bottom">© 2025 CricketPro Sports. All rights reserved.</p>
+    </footer>
+
+    <div id="toast">Item added to cart!</div>
+    <button id="backToTop">↑</button>
+
+    <script src="styles/js/cart.js"></script>
+    <script src="styles/js/wishlist.js"></script>
+    <script src="styles/js/faq.js"></script>
+    <script src="styles/js/script.js"></script>
+</body>
+</html>

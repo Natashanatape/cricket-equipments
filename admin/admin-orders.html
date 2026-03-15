@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Orders - CricketPro Admin</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-body">
+    <!-- Admin Sidebar -->
+    <aside class="admin-sidebar">
+        <div class="admin-sidebar-header">
+            <h2>Cricket<span>Pro</span></h2>
+            <p>Admin Panel</p>
+        </div>
+        <nav class="admin-nav">
+            <a href="admin-dashboard.html" class="admin-nav-link">
+                <span>📊</span> Dashboard
+            </a>
+            <a href="admin-products.html" class="admin-nav-link">
+                <span>📦</span> Products
+            </a>
+            <a href="admin-orders.html" class="admin-nav-link active">
+                <span>🛒</span> Orders
+            </a>
+            <a href="#" class="admin-nav-link" id="adminLogout">
+                <span>🚪</span> Logout
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Admin Main Content -->
+    <main class="admin-main">
+        <header class="admin-header">
+            <h1>Manage Orders</h1>
+            <div class="admin-stats-mini">
+                <span>Total: <strong id="totalOrdersCount">0</strong></span>
+            </div>
+        </header>
+
+        <!-- Filter -->
+        <section class="admin-filters">
+            <select id="filterStatus" class="admin-select">
+                <option value="all">All Orders</option>
+                <option value="Pending">Pending</option>
+                <option value="Processing">Processing</option>
+                <option value="Shipped">Shipped</option>
+                <option value="Delivered">Delivered</option>
+                <option value="Cancelled">Cancelled</option>
+            </select>
+            <input type="text" id="searchOrder" placeholder="Search by Order ID or Customer..." class="admin-search">
+        </section>
+
+        <!-- Orders Table -->
+        <section class="admin-section">
+            <div class="admin-table-wrapper">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Phone</th>
+                            <th>Items</th>
+                            <th>Total</th>
+                            <th>Payment</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersTableBody">
+                        <tr>
+                            <td colspan="9" class="no-data">No orders found</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Order Details Modal -->
+    <div class="admin-modal" id="orderModal">
+        <div class="admin-modal-content admin-modal-large">
+            <div class="admin-modal-header">
+                <h2>Order Details</h2>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="order-details-content" id="orderDetailsContent">
+                <!-- Order details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check authentication
+        if (localStorage.getItem('adminLoggedIn') !== 'true') {
+            window.location.href = 'admin-login.html';
+        }
+
+        let allOrders = JSON.parse(localStorage.getItem('allOrders')) || [];
+        let currentStatusFilter = 'all';
+        let searchQuery = '';
+
+        // Display orders
+        function displayOrders() {
+            let filteredOrders = [...allOrders];
+
+            if (currentStatusFilter !== 'all') {
+                filteredOrders = filteredOrders.filter(order => order.status === currentStatusFilter);
+            }
+
+            if (searchQuery) {
+                filteredOrders = filteredOrders.filter(order => 
+                    order.orderId.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    order.customer.fullName.toLowerCase().includes(searchQuery.toLowerCase())
+                );
+            }
+
+            const tbody = document.getElementById('ordersTableBody');
+            document.getElementById('totalOrdersCount').textContent = allOrders.length;
+
+            if (filteredOrders.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9" class="no-data">No orders found</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = filteredOrders.reverse().map(order => `
+                <tr>
+                    <td><strong>${order.orderId}</strong></td>
+                    <td>${order.customer.fullName}</td>
+                    <td>${order.customer.phone}</td>
+                    <td>${order.items.length} items</td>
+                    <td><strong>₹${order.total.toLocaleString()}</strong></td>
+                    <td>${order.paymentMethod.toUpperCase()}</td>
+                    <td>${new Date(order.timestamp).toLocaleDateString()}</td>
+                    <td>
+                        <select class="status-select status-${order.status.toLowerCase()}" onchange="updateOrderStatus('${order.orderId}', this.value)">
+                            <option value="Pending" ${order.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                            <option value="Processing" ${order.status === 'Processing' ? 'selected' : ''}>Processing</option>
+                            <option value="Shipped" ${order.status === 'Shipped' ? 'selected' : ''}>Shipped</option>
+                            <option value="Delivered" ${order.status === 'Delivered' ? 'selected' : ''}>Delivered</option>
+                            <option value="Cancelled" ${order.status === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button class="btn-view-order" onclick="viewOrderDetails('${order.orderId}')">View</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Update order status
+        window.updateOrderStatus = function(orderId, newStatus) {
+            const order = allOrders.find(o => o.orderId === orderId);
+            if (order) {
+                order.status = newStatus;
+                localStorage.setItem('allOrders', JSON.stringify(allOrders));
+                displayOrders();
+            }
+        };
+
+        // View order details
+        window.viewOrderDetails = function(orderId) {
+            const order = allOrders.find(o => o.orderId === orderId);
+            if (!order) return;
+
+            const content = document.getElementById('orderDetailsContent');
+            content.innerHTML = `
+                <div class="order-detail-section">
+                    <h3>Order Information</h3>
+                    <div class="order-info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Order ID:</span>
+                            <span class="info-value">${order.orderId}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Date:</span>
+                            <span class="info-value">${order.date}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Payment Method:</span>
+                            <span class="info-value">${order.paymentMethod.toUpperCase()}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Status:</span>
+                            <span class="status-badge status-${order.status.toLowerCase()}">${order.status}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="order-detail-section">
+                    <h3>Customer Details</h3>
+                    <div class="customer-details">
+                        <p><strong>Name:</strong> ${order.customer.fullName}</p>
+                        <p><strong>Email:</strong> ${order.customer.email}</p>
+                        <p><strong>Phone:</strong> ${order.customer.phone}</p>
+                        <p><strong>Address:</strong> ${order.customer.address}, ${order.customer.city}, ${order.customer.state} ${order.customer.pincode}</p>
+                    </div>
+                </div>
+
+                <div class="order-detail-section">
+                    <h3>Order Items</h3>
+                    <table class="order-items-table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${order.items.map(item => `
+                                <tr>
+                                    <td>${item.name}</td>
+                                    <td>₹${item.price.toLocaleString()}</td>
+                                    <td>${item.quantity}</td>
+                                    <td>₹${(item.price * item.quantity).toLocaleString()}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3"><strong>Subtotal:</strong></td>
+                                <td><strong>₹${(order.total - 50).toLocaleString()}</strong></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><strong>Delivery:</strong></td>
+                                <td><strong>₹50</strong></td>
+                            </tr>
+                            <tr class="total-row">
+                                <td colspan="3"><strong>Total:</strong></td>
+                                <td><strong>₹${order.total.toLocaleString()}</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            `;
+
+            document.getElementById('orderModal').classList.add('active');
+        };
+
+        // Close modal
+        document.getElementById('modalClose').addEventListener('click', function() {
+            document.getElementById('orderModal').classList.remove('active');
+        });
+
+        // Filter by status
+        document.getElementById('filterStatus').addEventListener('change', function() {
+            currentStatusFilter = this.value;
+            displayOrders();
+        });
+
+        // Search
+        document.getElementById('searchOrder').addEventListener('input', function() {
+            searchQuery = this.value;
+            displayOrders();
+        });
+
+        // Logout
+        document.getElementById('adminLogout').addEventListener('click', function(e) {
+            e.preventDefault();
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('adminLoggedIn');
+                localStorage.removeItem('adminUsername');
+                window.location.href = 'admin-login.html';
+            }
+        });
+
+        // Initialize
+        displayOrders();
+    </script>
+</body>
+</html>

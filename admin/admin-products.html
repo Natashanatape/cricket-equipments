@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Products - CricketPro Admin</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-body">
+    <!-- Admin Sidebar -->
+    <aside class="admin-sidebar">
+        <div class="admin-sidebar-header">
+            <h2>Cricket<span>Pro</span></h2>
+            <p>Admin Panel</p>
+        </div>
+        <nav class="admin-nav">
+            <a href="admin-dashboard.html" class="admin-nav-link">
+                <span>📊</span> Dashboard
+            </a>
+            <a href="admin-products.html" class="admin-nav-link active">
+                <span>📦</span> Products
+            </a>
+            <a href="admin-orders.html" class="admin-nav-link">
+                <span>🛒</span> Orders
+            </a>
+            <a href="#" class="admin-nav-link" id="adminLogout">
+                <span>🚪</span> Logout
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Admin Main Content -->
+    <main class="admin-main">
+        <header class="admin-header">
+            <h1>Manage Products</h1>
+            <button class="btn-add-product" id="btnAddProduct">+ Add New Product</button>
+        </header>
+
+        <!-- Filter & Search -->
+        <section class="admin-filters">
+            <input type="text" id="adminSearchProduct" placeholder="Search products..." class="admin-search">
+            <select id="adminFilterCategory" class="admin-select">
+                <option value="all">All Categories</option>
+                <option value="bats">Cricket Bats</option>
+                <option value="balls">Cricket Balls</option>
+                <option value="gloves">Batting Gloves</option>
+                <option value="helmets">Helmets</option>
+                <option value="pads">Batting Pads</option>
+            </select>
+        </section>
+
+        <!-- Products Grid -->
+        <section class="admin-products-grid" id="adminProductsGrid">
+            <!-- Products will be loaded here -->
+        </section>
+    </main>
+
+    <!-- Add/Edit Product Modal -->
+    <div class="admin-modal" id="productModal">
+        <div class="admin-modal-content">
+            <div class="admin-modal-header">
+                <h2 id="modalTitle">Add New Product</h2>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <form class="admin-modal-form" id="productForm">
+                <input type="hidden" id="productId">
+                
+                <div class="form-group">
+                    <label>Product Name *</label>
+                    <input type="text" id="productName" required placeholder="Enter product name">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Category *</label>
+                        <select id="productCategory" required>
+                            <option value="">Select category</option>
+                            <option value="bats">Cricket Bats</option>
+                            <option value="balls">Cricket Balls</option>
+                            <option value="gloves">Batting Gloves</option>
+                            <option value="helmets">Helmets</option>
+                            <option value="pads">Batting Pads</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Price (₹) *</label>
+                        <input type="number" id="productPrice" required placeholder="Enter price">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Image URL *</label>
+                    <input type="text" id="productImage" required placeholder="images/category/product.jpg">
+                </div>
+                
+                <div class="form-group">
+                    <label>Description *</label>
+                    <textarea id="productDesc" required placeholder="Enter product description" rows="3"></textarea>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" id="btnCancel">Cancel</button>
+                    <button type="submit" class="btn-save">Save Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="products.js"></script>
+    <script>
+        // Check authentication
+        if (localStorage.getItem('adminLoggedIn') !== 'true') {
+            window.location.href = 'admin-login.html';
+        }
+
+        let currentFilter = 'all';
+        let searchQuery = '';
+        let editingProductId = null;
+
+        // Display products
+        function displayAdminProducts() {
+            let filteredProducts = [...products];
+
+            if (currentFilter !== 'all') {
+                filteredProducts = filteredProducts.filter(p => p.category === currentFilter);
+            }
+
+            if (searchQuery) {
+                filteredProducts = filteredProducts.filter(p => 
+                    p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    p.desc.toLowerCase().includes(searchQuery.toLowerCase())
+                );
+            }
+
+            const grid = document.getElementById('adminProductsGrid');
+            
+            if (filteredProducts.length === 0) {
+                grid.innerHTML = '<div class="no-products">No products found</div>';
+                return;
+            }
+
+            grid.innerHTML = filteredProducts.map(product => `
+                <div class="admin-product-card">
+                    <img src="${product.image}" alt="${product.name}">
+                    <div class="admin-product-info">
+                        <h3>${product.name}</h3>
+                        <p class="product-category">${product.category.charAt(0).toUpperCase() + product.category.slice(1)}</p>
+                        <p class="product-desc-short">${product.desc}</p>
+                        <p class="product-price">₹${product.price.toLocaleString()}</p>
+                    </div>
+                    <div class="admin-product-actions">
+                        <button class="btn-edit" onclick="editProduct(${product.id})">Edit</button>
+                        <button class="btn-delete" onclick="deleteProduct(${product.id})">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Open modal
+        document.getElementById('btnAddProduct').addEventListener('click', function() {
+            editingProductId = null;
+            document.getElementById('modalTitle').textContent = 'Add New Product';
+            document.getElementById('productForm').reset();
+            document.getElementById('productModal').classList.add('active');
+        });
+
+        // Close modal
+        document.getElementById('modalClose').addEventListener('click', closeModal);
+        document.getElementById('btnCancel').addEventListener('click', closeModal);
+
+        function closeModal() {
+            document.getElementById('productModal').classList.remove('active');
+        }
+
+        // Edit product
+        window.editProduct = function(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+
+            editingProductId = id;
+            document.getElementById('modalTitle').textContent = 'Edit Product';
+            document.getElementById('productId').value = product.id;
+            document.getElementById('productName').value = product.name;
+            document.getElementById('productCategory').value = product.category;
+            document.getElementById('productPrice').value = product.price;
+            document.getElementById('productImage').value = product.image;
+            document.getElementById('productDesc').value = product.desc;
+            document.getElementById('productModal').classList.add('active');
+        };
+
+        // Delete product
+        window.deleteProduct = function(id) {
+            if (!confirm('Are you sure you want to delete this product?')) return;
+
+            const index = products.findIndex(p => p.id === id);
+            if (index > -1) {
+                products.splice(index, 1);
+                alert('Product deleted successfully!');
+                displayAdminProducts();
+            }
+        };
+
+        // Save product
+        document.getElementById('productForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const productData = {
+                id: editingProductId || Date.now(),
+                name: document.getElementById('productName').value,
+                category: document.getElementById('productCategory').value,
+                price: parseInt(document.getElementById('productPrice').value),
+                image: document.getElementById('productImage').value,
+                desc: document.getElementById('productDesc').value
+            };
+
+            if (editingProductId) {
+                const index = products.findIndex(p => p.id === editingProductId);
+                if (index > -1) {
+                    products[index] = productData;
+                    alert('Product updated successfully!');
+                }
+            } else {
+                products.push(productData);
+                alert('Product added successfully!');
+            }
+
+            closeModal();
+            displayAdminProducts();
+        });
+
+        // Filter
+        document.getElementById('adminFilterCategory').addEventListener('change', function() {
+            currentFilter = this.value;
+            displayAdminProducts();
+        });
+
+        // Search
+        document.getElementById('adminSearchProduct').addEventListener('input', function() {
+            searchQuery = this.value;
+            displayAdminProducts();
+        });
+
+        // Logout
+        document.getElementById('adminLogout').addEventListener('click', function(e) {
+            e.preventDefault();
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('adminLoggedIn');
+                localStorage.removeItem('adminUsername');
+                window.location.href = 'admin-login.html';
+            }
+        });
+
+        // Initialize
+        displayAdminProducts();
+    </script>
+</body>
+</html>

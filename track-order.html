@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Order - CricketPro</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">Cricket<span>Pro</span></div>
+        <button class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav class="nav-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="wishlist.html">Wishlist</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div class="nav-icons">
+            <button class="wishlist-btn" id="wishlistBtn">
+                ❤️ (<span id="wishlistCount">0</span>)
+            </button>
+            <button class="cart-btn" id="cartBtn">
+                🛒 (<span id="cartCount">0</span>)
+            </button>
+        </div>
+    </header>
+
+    <!-- Track Order Header -->
+    <section class="track-order-header">
+        <h1>Track Your Order</h1>
+        <p>Enter your order ID to track your shipment</p>
+    </section>
+
+    <!-- Track Order Section -->
+    <section class="section track-order-section">
+        <div class="track-order-container">
+            <!-- Search Order -->
+            <div class="track-search-card">
+                <h2>Enter Order Details</h2>
+                <div class="track-search-form">
+                    <input type="text" id="trackOrderId" placeholder="Enter Order ID (e.g., ORD1234567890)" class="track-input">
+                    <button class="btn-track-order" onclick="trackOrder()">Track Order</button>
+                </div>
+                <p class="track-hint">You can find your order ID in the order confirmation email or on the order success page.</p>
+            </div>
+
+            <!-- Order Tracking Result -->
+            <div class="track-result-card" id="trackResult" style="display: none;">
+                <!-- Tracking details will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>Cricket<span>Pro</span></h3>
+                <p>Your trusted partner for premium cricket equipment.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="products.html">Products</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <p>Email: info@cricketpro.com</p>
+                <p>Phone: +91 98765 43210</p>
+            </div>
+        </div>
+        <p class="footer-bottom">© 2025 CricketPro Sports. All rights reserved.</p>
+    </footer>
+
+    <div id="toast">Order found!</div>
+    <button id="backToTop">↑</button>
+
+    <script src="styles/js/cart.js"></script>
+    <script src="styles/js/wishlist.js"></script>
+    <script src="styles/js/script.js"></script>
+    <script>
+        // Track order function
+        function trackOrder() {
+            const orderIdInput = document.getElementById('trackOrderId');
+            const orderId = orderIdInput.value.trim();
+            const trackResult = document.getElementById('trackResult');
+
+            if (!orderId) {
+                showToast('Please enter an order ID');
+                return;
+            }
+
+            // Get all orders
+            const allOrders = JSON.parse(localStorage.getItem('allOrders')) || [];
+            const order = allOrders.find(o => o.orderId === orderId);
+
+            if (!order) {
+                trackResult.innerHTML = `
+                    <div class="track-error">
+                        <div class="error-icon">❌</div>
+                        <h2>Order Not Found</h2>
+                        <p>We couldn't find an order with ID: <strong>${orderId}</strong></p>
+                        <p>Please check your order ID and try again.</p>
+                    </div>
+                `;
+                trackResult.style.display = 'block';
+                return;
+            }
+
+            // Display order tracking
+            displayOrderTracking(order);
+            trackResult.style.display = 'block';
+            showToast('Order found!');
+        }
+
+        // Display order tracking timeline
+        function displayOrderTracking(order) {
+            const trackResult = document.getElementById('trackResult');
+            
+            // Define tracking stages
+            const stages = [
+                { status: 'Pending', icon: '📝', title: 'Order Placed', desc: 'Your order has been received' },
+                { status: 'Processing', icon: '⚙️', title: 'Processing', desc: 'We are preparing your order' },
+                { status: 'Shipped', icon: '🚚', title: 'Shipped', desc: 'Your order is on the way' },
+                { status: 'Delivered', icon: '✅', title: 'Delivered', desc: 'Order delivered successfully' }
+            ];
+
+            const currentStageIndex = stages.findIndex(s => s.status === order.status);
+            const isCancelled = order.status === 'Cancelled';
+
+            trackResult.innerHTML = `
+                <div class="track-order-info">
+                    <h2>Order ID: ${order.orderId}</h2>
+                    <div class="track-order-meta">
+                        <span>Order Date: ${order.date}</span>
+                        <span class="status-badge status-${order.status.toLowerCase()}">${order.status}</span>
+                    </div>
+                </div>
+
+                ${isCancelled ? `
+                    <div class="track-cancelled">
+                        <div class="cancelled-icon">❌</div>
+                        <h3>Order Cancelled</h3>
+                        <p>This order has been cancelled.</p>
+                    </div>
+                ` : `
+                    <div class="track-timeline">
+                        ${stages.map((stage, index) => `
+                            <div class="timeline-item ${index <= currentStageIndex ? 'completed' : ''} ${index === currentStageIndex ? 'active' : ''}">
+                                <div class="timeline-icon">${stage.icon}</div>
+                                <div class="timeline-content">
+                                    <h3>${stage.title}</h3>
+                                    <p>${stage.desc}</p>
+                                    ${index === currentStageIndex ? '<span class="current-status">Current Status</span>' : ''}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `}
+
+                <div class="track-order-details">
+                    <h3>Order Details</h3>
+                    <div class="track-details-grid">
+                        <div class="detail-item">
+                            <span class="detail-label">Customer:</span>
+                            <span class="detail-value">${order.customer.fullName}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Phone:</span>
+                            <span class="detail-value">${order.customer.phone}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Payment:</span>
+                            <span class="detail-value">${order.paymentMethod.toUpperCase()}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Total Amount:</span>
+                            <span class="detail-value">₹${order.total.toLocaleString()}</span>
+                        </div>
+                    </div>
+                    <div class="delivery-address">
+                        <strong>Delivery Address:</strong>
+                        <p>${order.customer.address}, ${order.customer.city}, ${order.customer.state} ${order.customer.pincode}</p>
+                    </div>
+                </div>
+
+                <div class="track-items">
+                    <h3>Items (${order.items.length})</h3>
+                    <div class="track-items-list">
+                        ${order.items.map(item => `
+                            <div class="track-item">
+                                <img src="${item.image}" alt="${item.name}">
+                                <div class="track-item-info">
+                                    <h4>${item.name}</h4>
+                                    <p>Qty: ${item.quantity} × ₹${item.price.toLocaleString()}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Auto-load if order ID in URL
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('orderId');
+            
+            if (orderId) {
+                document.getElementById('trackOrderId').value = orderId;
+                trackOrder();
+            }
+        });
+    </script>
+</body>
+</html>
