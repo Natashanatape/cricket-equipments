@@ -852,7 +852,7 @@ img {
     align-items: center;
     justify-content: center;
     transition: 0.3s;
-    z-index: 999;
+    z-index: 998;
 }
 
 #backToTop.show {
