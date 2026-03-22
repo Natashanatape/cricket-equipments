@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Test - CricketPro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #00c853;
+            color: white;
+            border-radius: 50px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .info-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .info-card h3 {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+        
+        .info-card p {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .test-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .test-link {
+            display: block;
+            padding: 15px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .test-link:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .checklist {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        
+        .checklist h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .checklist ul {
+            list-style: none;
+        }
+        
+        .checklist li {
+            padding: 10px;
+            margin-bottom: 5px;
+            background: white;
+            border-radius: 5px;
+            border-left: 4px solid #00c853;
+        }
+        
+        .checklist li:before {
+            content: "✓ ";
+            color: #00c853;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .test-links {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏏 CricketPro Responsive Test</h1>
+        <p class="subtitle">Test your website on different screen sizes</p>
+        <div class="status">✅ All Systems Ready</div>
+        
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>Screen Width</h3>
+                <p id="screenWidth">-</p>
+            </div>
+            <div class="info-card">
+                <h3>Device Type</h3>
+                <p id="deviceType">-</p>
+            </div>
+            <div class="info-card">
+                <h3>Orientation</h3>
+                <p id="orientation">-</p>
+            </div>
+            <div class="info-card">
+                <h3>Breakpoint</h3>
+                <p id="breakpoint">-</p>
+            </div>
+        </div>
+        
+        <h2 style="margin-bottom: 15px; color: #333;">Test Pages:</h2>
+        <div class="test-links">
+            <a href="index.html" class="test-link">🏠 Home Page</a>
+            <a href="products.html" class="test-link">📦 Products</a>
+            <a href="product-detail.html?id=1" class="test-link">🔍 Product Detail</a>
+            <a href="wishlist.html" class="test-link">❤️ Wishlist</a>
+            <a href="checkout.html" class="test-link">🛒 Checkout</a>
+            <a href="contact.html" class="test-link">📧 Contact</a>
+            <a href="faq.html" class="test-link">❓ FAQ</a>
+            <a href="track-order.html" class="test-link">📍 Track Order</a>
+            <a href="admin/admin-login.html" class="test-link">🔐 Admin Panel</a>
+        </div>
+        
+        <div class="checklist">
+            <h2>📱 Mobile Testing Checklist:</h2>
+            <ul>
+                <li>Test hamburger menu open/close</li>
+                <li>Test cart & wishlist button expansion</li>
+                <li>Test chatbot toggle and functionality</li>
+                <li>Test product grid layout</li>
+                <li>Test form inputs and submissions</li>
+                <li>Test image loading and scaling</li>
+                <li>Test navigation between pages</li>
+                <li>Test landscape orientation</li>
+                <li>Test touch interactions</li>
+                <li>Test scroll behavior</li>
+            </ul>
+        </div>
+        
+        <div class="checklist" style="margin-top: 20px; background: #e3f2fd; border-left: 4px solid #2196f3;">
+            <h2>💡 Testing Tips:</h2>
+            <ul style="border-left-color: #2196f3;">
+                <li>Use Chrome DevTools (F12) → Toggle Device Toolbar</li>
+                <li>Test on actual mobile devices for best results</li>
+                <li>Try different screen sizes: 320px, 375px, 768px, 1024px</li>
+                <li>Test both portrait and landscape modes</li>
+                <li>Check touch targets are at least 44x44px</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        function updateInfo() {
+            const width = window.innerWidth;
+            document.getElementById('screenWidth').textContent = width + 'px';
+            
+            // Device type
+            let device = 'Desktop';
+            if (width <= 480) device = 'Mobile Small';
+            else if (width <= 768) device = 'Mobile/Tablet';
+            else if (width <= 1024) device = 'Tablet/Laptop';
+            document.getElementById('deviceType').textContent = device;
+            
+            // Orientation
+            const orientation = width > window.innerHeight ? 'Landscape' : 'Portrait';
+            document.getElementById('orientation').textContent = orientation;
+            
+            // Breakpoint
+            let breakpoint = 'Desktop';
+            if (width <= 480) breakpoint = '≤480px';
+            else if (width <= 768) breakpoint = '≤768px';
+            else if (width <= 1024) breakpoint = '≤1024px';
+            else breakpoint = '>1024px';
+            document.getElementById('breakpoint').textContent = breakpoint;
+        }
+        
+        updateInfo();
+        window.addEventListener('resize', updateInfo);
+        window.addEventListener('orientationchange', updateInfo);
+    </script>
+</body>
+</html>

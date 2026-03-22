@@ -157,44 +157,5 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Ensure chatbot works on mobile
-    function initializeChatbot() {
-        const chatbotToggle = document.querySelector('.chatbot-toggle');
-        const chatbotContainer = document.getElementById('chatbot');
-        
-        if (chatbotToggle && chatbotContainer) {
-            // Make sure chatbot toggle is visible and functional
-            chatbotToggle.style.display = 'flex';
-            chatbotToggle.style.zIndex = '997';
-            
-            // Ensure chatbot container has proper z-index
-            chatbotContainer.style.zIndex = '996';
-            
-            // Add click event if not already added
-            if (!chatbotToggle.hasAttribute('data-initialized')) {
-                chatbotToggle.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    
-                    if (typeof toggleChatbot === 'function') {
-                        toggleChatbot();
-                    } else {
-                        // Fallback toggle
-                        chatbotContainer.classList.toggle('active');
-                    }
-                });
-                chatbotToggle.setAttribute('data-initialized', 'true');
-            }
-        }
-    }
-    
-    // Initialize chatbot
-    initializeChatbot();
-    
-    // Re-initialize chatbot after viewport changes
-    let chatbotTimer;
-    window.addEventListener('resize', function() {
-        clearTimeout(chatbotTimer);
-        chatbotTimer = setTimeout(initializeChatbot, 100);
-    });
+    // Chatbot is now handled by chatbot.js - removed duplicate initialization
 });

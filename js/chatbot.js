@@ -1,4 +1,4 @@
-// Chatbot functionality
+// Chatbot functionality - Simplified and Fixed
 let chatOpen = false;
 let conversationHistory = [];
 
@@ -122,29 +122,18 @@ function getBotResponse(userMessage) {
     return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
 }
 
-// Toggle chatbot
+// Toggle chatbot - MAIN FUNCTION
 function toggleChatbot() {
     const chatbot = document.getElementById('chatbot');
-    const chatbotToggle = document.querySelector('.chatbot-toggle');
-    
-    if (!chatbot) {
-        console.error('Chatbot container not found');
-        return;
-    }
+    if (!chatbot) return;
     
     chatOpen = !chatOpen;
     
     if (chatOpen) {
-        chatbot.classList.add('active');
         chatbot.style.display = 'flex';
-        
-        // Ensure proper z-index on mobile
-        if (window.innerWidth <= 768) {
-            chatbot.style.zIndex = '9999';
-            if (chatbotToggle) {
-                chatbotToggle.style.zIndex = '10000';
-            }
-        }
+        setTimeout(() => {
+            chatbot.classList.add('active');
+        }, 10);
         
         // Send welcome message if first time
         if (conversationHistory.length === 0) {
@@ -154,21 +143,17 @@ function toggleChatbot() {
         }
     } else {
         chatbot.classList.remove('active');
-        // Don't hide completely, just make inactive
         setTimeout(() => {
-            if (!chatOpen) {
-                chatbot.style.display = 'none';
-            }
+            chatbot.style.display = 'none';
         }, 300);
     }
 }
 
-// Make sure toggleChatbot is globally available
-window.toggleChatbot = toggleChatbot;
-
 // Add user message
 function addUserMessage(message) {
     const chatMessages = document.getElementById('chatMessages');
+    if (!chatMessages) return;
+    
     const messageDiv = document.createElement('div');
     messageDiv.className = 'chat-message user-message';
     messageDiv.innerHTML = `<p>${message}</p>`;
@@ -181,6 +166,7 @@ function addUserMessage(message) {
 // Add bot message with typing animation
 function addBotMessage(message) {
     const chatMessages = document.getElementById('chatMessages');
+    if (!chatMessages) return;
     
     // Show typing indicator
     const typingDiv = document.createElement('div');
@@ -200,21 +186,20 @@ function addBotMessage(message) {
         chatMessages.scrollTop = chatMessages.scrollHeight;
         
         conversationHistory.push({ type: 'bot', message });
-    }, 1000 + Math.random() * 1000); // Random delay between 1-2 seconds
+    }, 1000 + Math.random() * 1000);
 }
 
 // Send message
 function sendChatMessage() {
     const input = document.getElementById('chatInput');
-    const message = input.value.trim();
+    if (!input) return;
     
+    const message = input.value.trim();
     if (message === '') return;
     
-    // Add user message
     addUserMessage(message);
     input.value = '';
     
-    // Get and add bot response
     setTimeout(() => {
         const response = getBotResponse(message);
         addBotMessage(response);
@@ -238,58 +223,30 @@ function sendQuickReply(message) {
     }, 500);
 }
 
-// Initialize chatbot
-document.addEventListener('DOMContentLoaded', function() {
-    // Add quick reply buttons after bot messages
-    const quickReplies = [
-        'Show me cricket bats',
-        'What are your delivery charges?',
-        'Do you have any discounts?',
-        'How can I track my order?'
-    ];
+// Make functions globally available
+window.toggleChatbot = toggleChatbot;
+window.sendChatMessage = sendChatMessage;
+window.handleChatKeypress = handleChatKeypress;
+window.sendQuickReply = sendQuickReply;
+
+// Initialize chatbot when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initChatbot);
+} else {
+    initChatbot();
+}
+
+function initChatbot() {
+    const chatbot = document.getElementById('chatbot');
     
-    // Store quick replies for later use
-    window.quickReplies = quickReplies;
-    
-    // Initialize chatbot button
-    const chatbotToggle = document.querySelector('.chatbot-toggle');
-    const chatbotContainer = document.getElementById('chatbot');
-    
-    if (chatbotToggle && chatbotContainer) {
-        // Ensure chatbot toggle is clickable
-        chatbotToggle.style.pointerEvents = 'all';
-        chatbotToggle.style.cursor = 'pointer';
-        
-        // Add click event listener
-        chatbotToggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            console.log('Chatbot toggle clicked'); // Debug log
-            toggleChatbot();
-        });
-        
-        // Add touch event for mobile
-        chatbotToggle.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            console.log('Chatbot toggle touched'); // Debug log
-            toggleChatbot();
-        });
-        
-        // Ensure chatbot container is properly positioned
-        chatbotContainer.style.position = 'fixed';
-        chatbotContainer.style.display = 'none';
-        
-        console.log('Chatbot initialized successfully'); // Debug log
-    } else {
-        console.error('Chatbot elements not found:', {
-            toggle: !!chatbotToggle,
-            container: !!chatbotContainer
-        });
+    if (!chatbot) {
+        console.error('Chatbot element not found');
+        return;
     }
     
-    // Make functions globally available
-    window.sendChatMessage = sendChatMessage;
-    window.handleChatKeypress = handleChatKeypress;
-    window.sendQuickReply = sendQuickReply;
-});
+    // Ensure chatbot is hidden initially
+    chatbot.style.display = 'none';
+    chatbot.classList.remove('active');
+    
+    console.log('Chatbot initialized successfully');
+}
